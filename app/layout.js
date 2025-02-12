@@ -1,7 +1,6 @@
 import { Kanit } from "next/font/google";
 import { Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AuroraBackground } from "@/components/ui/aurora-background";
 
 const kanit = Kanit({
 	variable: "--font-kanit",
@@ -23,7 +22,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="th">
 			<body className={`${kanit.variable} ${geistMono.variable} antialiased`}>
-				<AuroraBackground>{children}</AuroraBackground>
+				{children}
 			</body>
 		</html>
 	);
