@@ -27,11 +27,11 @@ const slideInLeft = {
 
 const FadeInSection = ({ children, className = "", variant = "fadeInUp" }) => {
 	const ref = useRef(null);
-	// ปรับค่า margin เป็น "-100px" เพื่อให้ trigger ใกล้กว่าเดิม
+
 	const isInView = useInView(ref, {
 		once: true,
 		margin: "-100px",
-		amount: 0.3, // เพิ่ม amount เพื่อกำหนดว่าต้องเห็น element กี่เปอร์เซ็นต์ถึงจะ trigger
+		amount: 0.3,
 	});
 	const controls = useAnimation();
 
@@ -64,11 +64,11 @@ const FadeInSection = ({ children, className = "", variant = "fadeInUp" }) => {
 
 export default function Page() {
 	return (
-		<div className="min-h-[450vh]">
+		<div className="min-h-[480vh]">
 			{/* Hero Section */}
 			<FadeInSection className="pt-20 pb-16 px-4 text-center" variant="scaleIn">
 				<h1 className="text-4xl font-bold mb-8">
-					โปรโมชั่น MG ทุกรุ่น มาพร้อมข้อเสนอสุดพิเศษ
+					โปรโมชั่น BYD ทุกรุ่น มาพร้อมข้อเสนอสุดพิเศษ
 				</h1>
 				<Image
 					src="/MG1.jpeg"
@@ -88,7 +88,7 @@ export default function Page() {
 						whileInView="visible"
 						viewport={{
 							once: true,
-							amount: 0.3, // ต้องเห็น element 30% ถึงจะ trigger
+							amount: 0.3,
 							margin: "-100px",
 						}}
 						className="p-6 bg-white dark:bg-zinc-800 rounded-xl shadow-lg"
@@ -190,9 +190,10 @@ export default function Page() {
 				/>
 			</FadeInSection>
 
-			<div className="hidden">
+			<div className="hidden lg:block">
 				<Nav />
 			</div>
+
 			<div className="lg:hidden">
 				<NavMobile />
 			</div>

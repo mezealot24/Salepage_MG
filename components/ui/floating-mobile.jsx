@@ -5,6 +5,7 @@ import {
 	AnimatePresence,
 	useScroll,
 	useMotionValueEvent,
+	stagger,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -13,15 +14,11 @@ export const FloatingNavMobile = ({ navItems, className }) => {
 	const { scrollYProgress } = useScroll();
 	const [visible, setVisible] = useState(true);
 	const [isTop, setIsTop] = useState(true);
-	const [showButton, setShowButton] = useState(false);
+	const [mounted, setMounted] = useState(false);
 
 	useEffect(() => {
-		const timer = setTimeout(() => {
-			setShowButton(true);
-		}, 500); // 0.5 seconds delay
-
-		return () => clearTimeout(timer);
-	}, []); // Run once after initial render
+		setMounted(true);
+	}, []);
 
 	useMotionValueEvent(scrollYProgress, "change", (current) => {
 		if (typeof current === "number") {
@@ -30,25 +27,73 @@ export const FloatingNavMobile = ({ navItems, className }) => {
 
 			if (scrollYProgress.get() > 0.02 || direction < 0) {
 				setVisible(true);
-				// Only show button after initial scroll
-				setShowButton(true);
 			} else {
 				setVisible(false);
 			}
 		}
 	});
 
+	const navVariants = {
+		hidden: {
+			transform: "translateY(-100%)",
+			opacity: 0,
+		},
+		visible: {
+			transform: "translateY(0%)",
+			opacity: 1,
+			transition: {
+				duration: 0.5,
+				ease: "easeOut",
+				when: "beforeChildren",
+				staggerChildren: 0.1,
+			},
+		},
+	};
+
+	const itemVariants = {
+		hidden: {
+			opacity: 0,
+			y: -20,
+		},
+		visible: {
+			opacity: 1,
+			y: 0,
+			transition: {
+				duration: 0.4,
+				ease: "easeOut",
+			},
+		},
+	};
+
+	const buttonVariants = {
+		hidden: {
+			opacity: 0,
+			scale: 0.5,
+		},
+		visible: {
+			opacity: 1,
+			scale: 1,
+			transition: {
+				duration: 0.5,
+				delay: 0.3,
+				ease: "easeOut",
+			},
+		},
+	};
+
+	if (!mounted) return null;
+
 	return (
 		<div className="fixed top-0 left-0 right-0 z-[5000]">
 			<motion.div
-				initial={{ transform: "translateY(-100%)" }}
-				animate={{
-					transform: visible ? "translateY(0%)" : "translateY(-100%)",
+				variants={navVariants}
+				initial="hidden"
+				animate={visible ? "visible" : "hidden"}
+				style={{
 					width: isTop ? "100%" : "80%",
 					maxWidth: "100%",
 					borderRadius: isTop ? "0px" : "50px",
 				}}
-				transition={{ duration: 0.4, ease: "easeOut" }}
 				className={cn(
 					"mx-auto shadow-lg pr-4 pl-10 py-3 flex items-center justify-center space-x-6 transition-all duration-300",
 					isTop
@@ -59,31 +104,27 @@ export const FloatingNavMobile = ({ navItems, className }) => {
 				)}
 			>
 				{navItems.map((navItem, idx) => (
-					<Link
-						key={`link-${idx}`}
-						href={navItem.link}
-						className="relative flex items-center space-x-2 text-lg font-semibold uppercase tracking-wide transition-all duration-300 hover:scale-110"
-					>
-						<span className="text-2xl">{navItem.icon}</span>
-						<span className="hidden sm:block">{navItem.name}</span>
-					</Link>
+					<motion.div key={`nav-${idx}`} variants={itemVariants}>
+						<Link
+							href={navItem.link}
+							className="relative flex items-center space-x-2 text-lg font-semibold uppercase tracking-wide transition-all duration-300 hover:scale-110"
+						>
+							<span className="text-2xl">{navItem.icon}</span>
+							<span className="hidden sm:block">{navItem.name}</span>
+						</Link>
+					</motion.div>
 				))}
 
-				<AnimatePresence>
-					{showButton && (
-						<motion.button
-							initial={{ opacity: 0, scale: 0.5 }}
-							animate={{ opacity: 1, scale: 1 }}
-							exit={{ opacity: 0, scale: 0.5 }}
-							transition={{ duration: 0.5, delay: 0.7, ease: "easeOut" }}
-							className="relative text-lg font-bold px-6 py-3 rounded-full bg-white text-[#ff416c] transition-all duration-300 shadow-lg hover:scale-110 hover:shadow-2xl"
-						>
-							<span>ติดต่อฝ่ายขาย</span>
-							<span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-[#ff4b2b] to-transparent h-px" />
-						</motion.button>
-					)}
-				</AnimatePresence>
+				<motion.button
+					variants={buttonVariants}
+					className="relative text-lg font-bold px-6 py-3 rounded-full bg-white text-[#ff416c] transition-all duration-300 shadow-lg hover:scale-110 hover:shadow-2xl"
+				>
+					<span>ติดต่อฝ่ายขาย</span>
+					<span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-[#ff4b2b] to-transparent h-px" />
+				</motion.button>
 			</motion.div>
 		</div>
 	);
 };
+
+export default FloatingNavMobile;
