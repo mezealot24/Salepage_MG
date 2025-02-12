@@ -71,7 +71,7 @@ export default function Page() {
 					โปรโมชั่น BYD ทุกรุ่น มาพร้อมข้อเสนอสุดพิเศษ
 				</h1>
 				<Image
-					src="/MG1.jpeg"
+					src="/BYD1.jpg"
 					width={800}
 					height={600}
 					alt="MG Promotion"

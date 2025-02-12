@@ -97,9 +97,9 @@ export const FloatingNavMobile = ({ navItems, className }) => {
 				className={cn(
 					"mx-auto shadow-lg pr-4 pl-10 py-3 flex items-center justify-center space-x-6 transition-all duration-300",
 					isTop
-						? "bg-red-500/90 py-5"
-						: "bg-gradient-to-r from-[#f07be6] via-[#f59d8d] to-[#ff4873]",
-					"text-white",
+						? "bg-pink-200/90 py-5"
+						: "bg-gradient-to-r from-pink-200 via-rose-200 to-red-200",
+					"text-gray-700",
 					className
 				)}
 			>
@@ -117,10 +117,10 @@ export const FloatingNavMobile = ({ navItems, className }) => {
 
 				<motion.button
 					variants={buttonVariants}
-					className="relative text-lg font-bold px-6 py-3 rounded-full bg-white text-[#ff416c] transition-all duration-300 shadow-lg hover:scale-110 hover:shadow-2xl"
+					className="relative text-lg font-bold px-6 py-3 rounded-full bg-white text-pink-500 transition-all duration-300 shadow-lg hover:scale-110 hover:shadow-2xl"
 				>
 					<span>ติดต่อฝ่ายขาย</span>
-					<span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-[#ff4b2b] to-transparent h-px" />
+					<span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-pink-300 to-transparent h-px" />
 				</motion.button>
 			</motion.div>
 		</div>
