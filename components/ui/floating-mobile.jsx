@@ -25,9 +25,10 @@ export const FloatingNavMobile = ({ navItems, className }) => {
 			let direction = current - scrollYProgress.getPrevious();
 			setIsTop(scrollYProgress.get() < 0.05);
 
-			if (scrollYProgress.get() > 0.02 || direction < 0) {
+			// Show nav immediately when scrolling up, hide when scrolling down past 20%
+			if (direction < 0) {
 				setVisible(true);
-			} else {
+			} else if (scrollYProgress.get() > 0.2) {
 				setVisible(false);
 			}
 		}
@@ -53,7 +54,7 @@ export const FloatingNavMobile = ({ navItems, className }) => {
 	const itemVariants = {
 		hidden: {
 			opacity: 0,
-			y: -20,
+			y: -10,
 		},
 		visible: {
 			opacity: 1,
@@ -97,9 +98,9 @@ export const FloatingNavMobile = ({ navItems, className }) => {
 				className={cn(
 					"mx-auto shadow-lg pr-4 pl-10 py-3 flex items-center justify-center space-x-6 transition-all duration-300",
 					isTop
-						? "bg-pink-200/90 py-5"
-						: "bg-gradient-to-r from-pink-200 via-rose-200 to-red-200",
-					"text-gray-700",
+						? "bg-white/95 backdrop-blur-sm py-5 border-b border-gray-200"
+						: "bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900",
+					isTop ? "text-gray-800" : "text-white",
 					className
 				)}
 			>
@@ -117,10 +118,10 @@ export const FloatingNavMobile = ({ navItems, className }) => {
 
 				<motion.button
 					variants={buttonVariants}
-					className="relative text-lg font-bold px-6 py-3 rounded-full bg-white text-pink-500 transition-all duration-300 shadow-lg hover:scale-110 hover:shadow-2xl"
+					className="relative text-lg font-bold px-6 py-3 border-zinc-100 rounded-full bg-white text-blue-900 transition-all duration-300 shadow-lg hover:scale-105 hover:shadow-2xl hover:bg-blue-50"
 				>
 					<span>ติดต่อฝ่ายขาย</span>
-					<span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-pink-300 to-transparent h-px" />
+					<span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-300 to-transparent h-px" />
 				</motion.button>
 			</motion.div>
 		</div>

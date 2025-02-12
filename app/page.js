@@ -4,6 +4,8 @@ import { motion, useInView, useAnimation } from "framer-motion";
 import { Nav } from "@/components/NavContainer";
 import Image from "next/image";
 import { NavMobile } from "@/components/NavMobileContainer";
+import { HeroSlider } from "@/components/HeroSlider";
+import SliderPromotion from "@/components/SliderPromotion";
 
 // Animation variants for different sections
 const fadeInUp = {
@@ -64,20 +66,9 @@ const FadeInSection = ({ children, className = "", variant = "fadeInUp" }) => {
 
 export default function Page() {
 	return (
-		<div className="min-h-[480vh]">
+		<div className="min-h-[400vh] lg:min-h-[450]">
 			{/* Hero Section */}
-			<FadeInSection className="pt-20 pb-16 px-4 text-center" variant="scaleIn">
-				<h1 className="text-4xl font-bold mb-8">
-					โปรโมชั่น BYD ทุกรุ่น มาพร้อมข้อเสนอสุดพิเศษ
-				</h1>
-				<Image
-					src="/BYD1.jpg"
-					width={800}
-					height={600}
-					alt="MG Promotion"
-					className="rounded-lg shadow-xl mx-auto"
-				/>
-			</FadeInSection>
+			<HeroSlider />
 
 			{/* Features Section */}
 			<FadeInSection className="py-16 bg-gray-50 dark:bg-zinc-800/50">
@@ -93,7 +84,7 @@ export default function Page() {
 						}}
 						className="p-6 bg-white dark:bg-zinc-800 rounded-xl shadow-lg"
 					>
-						<h3 className="text-xl font-semibold mb-4">จองรถ MG ทุกรุ่น</h3>
+						<h3 className="text-xl font-semibold mb-4">จองรถ BYD ทุกรุ่น</h3>
 						<p className="text-gray-600 dark:text-gray-300">
 							เริ่มต้นเพียง 1,000 บาท พร้อมบริการเจ้าหน้าที่สินเชื่อ
 							วิ่งเซ็นเอกสารถึงหน้าบ้านลูกค้า ทั่วไทย
@@ -141,18 +132,7 @@ export default function Page() {
 				className="py-16 px-4 text-center bg-blue-50 dark:bg-zinc-800/30"
 				variant="scaleIn"
 			>
-				<h2 className="text-3xl font-bold mb-6">สู้ทุกคัน ดันทุกเคส</h2>
-				<p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-					ติดต่อฝ่ายขายเพื่อรับข้อเสนอพิเศษ
-				</p>
-				<motion.a
-					href="tel:092-259-2626"
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
-					className="px-8 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors inline-block"
-				>
-					โทร. 092-259-2626
-				</motion.a>
+				<SliderPromotion />
 			</FadeInSection>
 
 			{/* Additional Image Sections */}
